@@ -27,7 +27,7 @@ public class Score extends javax.swing.JDialog {
 
     void loadScore() {
         try {
-            ResultSet rset = new JDBC().getData("SELECT * FROM score");
+            ResultSet rset = new JDBC().getData("SELECT * FROM score ORDER BY score DESC LIMIT 5");
             DefaultTableModel df = (DefaultTableModel) tblScore.getModel();
             df.setRowCount(0);
             while (rset.next()) {
@@ -115,11 +115,11 @@ public class Score extends javax.swing.JDialog {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(324, 252));
+        setSize(new java.awt.Dimension(324, 227));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
