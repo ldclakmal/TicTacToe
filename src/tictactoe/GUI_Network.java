@@ -12,8 +12,11 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -334,13 +337,51 @@ public class GUI_Network extends javax.swing.JFrame {
 
     public void checkWinner() {
         if (checkForWin()) {
-            JOptionPane.showMessageDialog(null, "We have a winner! Congrats!");
-//            System.out.println("We have a winner! Congrats!");
-            System.exit(0);
+            if (status == "Server") {
+                JOptionPane.showMessageDialog(null, "You Won! Congrats!");
+                try {
+                    ResultSet rset = db.getData("SELECT * FROM score WHERE name='" + player_name + "'");
+                    if (rset.next()) {
+                        int score = rset.getInt("score");
+                        score++;
+                        db.putData("UPDATE score SET score='" + score + "'");
+                    } else {
+                        db.putData("INSERT INTO score(name, score) VALUES('" + player_name + "','1')");
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+                try {
+                    hmout.get(tblClients.getValueAt(client, 0).toString()).writeObject("You Lost!");
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+            } else if (status == "Client") {
+                try {
+                    hmout.get(tblClients.getValueAt(client, 0).toString()).writeObject("You Lost!");
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+                JOptionPane.showMessageDialog(null, "You Won! Congrats!");
+                try {
+                    ResultSet rset = db.getData("SELECT * FROM score WHERE name='" + player_name + "'");
+                    if (rset.next()) {
+                        int score = rset.getInt("score");
+                        score++;
+                        db.putData("UPDATE score SET score='" + score + "'");
+                    } else {
+                        db.putData("INSERT INTO score(name, score) VALUES('" + player_name + "','1')");
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            }
+            home.setVisible(true);
+            this.dispose();
         } else if (isBoardFull()) {
             JOptionPane.showMessageDialog(null, "Appears we have a draw!");
-//            System.out.println("Appears we have a draw!");
-            System.exit(0);
+            home.setVisible(true);
+            this.dispose();
         }
         changePlayer();
     }
