@@ -13,6 +13,8 @@ import java.net.ServerSocket;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,7 +39,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     String status;
     int client;
     JPanel[] jp;
-//    Home home;
+    Home home;
     char player_symbol;
     String player_name;
 
@@ -46,7 +48,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
-    public GUI_SinglePlayer(char symbol, String name) {
+    public GUI_SinglePlayer(Home h, char symbol, String name) {
         initComponents();
         board = new char[3][3];
         currentPlayerMark = symbol;
@@ -59,7 +61,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
         }
 
         jp = new JPanel[]{jp1, jp2, jp3, jp4, jp5, jp6, jp7, jp8, jp9};
-//        home = h;
+        home = h;
     }
 
     public void switchPanel(Object ob) {
@@ -249,11 +251,11 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "You Lost!");
             }
-//            home.setVisible(true);
+            home.setVisible(true);
             this.dispose();
         } else if (isBoardFull()) {
             JOptionPane.showMessageDialog(null, "Appears we have a draw!");
-//            home.setVisible(true);
+            home.setVisible(true);
             this.dispose();
         }
         changePlayer();
