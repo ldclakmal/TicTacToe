@@ -20,13 +20,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Chanaka Lakmal
  */
 public class GUI_Network extends javax.swing.JFrame {
-    
+
     InetAddress inet;
     ServerSocket ss;
     int port = 5556;
@@ -40,8 +41,11 @@ public class GUI_Network extends javax.swing.JFrame {
     int client;
     Home home;
     String player_name;
-    
+    private char[][] board;
+    private char currentPlayerMark;
+
     JDBC db = new JDBC();
+    private Logger logger = Logger.getLogger(GUI_Network.class);
 
     /**
      * Creates new form GUI
@@ -54,7 +58,7 @@ public class GUI_Network extends javax.swing.JFrame {
         pnlGame.setVisible(false);
         pnlClientTable.setVisible(false);
         pnlServerIP.setVisible(false);
-        
+
         df = (DefaultTableModel) tblClients.getModel();
         hmout = new HashMap<String, ObjectOutputStream>();
         try {
@@ -64,15 +68,16 @@ public class GUI_Network extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         home = h;
         player_name = name;
         lblName.setText(player_name);
     }
-    
+
     private void connectServer() {
+        logger.info("connectServer");
         new Thread(new Runnable() {
-            
+
             @Override
             public void run() {
                 try {
@@ -93,14 +98,15 @@ public class GUI_Network extends javax.swing.JFrame {
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-                
+
             }
         }).start();
     }
-    
+
     private void listenServer(final ObjectInputStream obin, final int count, final String host) {
+        logger.info("listenServer");
         new Thread(new Runnable() {
-            
+
             @Override
             public void run() {
                 while (true) {
@@ -120,10 +126,11 @@ public class GUI_Network extends javax.swing.JFrame {
             }
         }).start();
     }
-    
+
     private void connectClient() {
+        logger.info("connectClient");
         new Thread(new Runnable() {
-            
+
             @Override
             public void run() {
                 try {
@@ -142,10 +149,11 @@ public class GUI_Network extends javax.swing.JFrame {
             }
         }).start();
     }
-    
+
     private void listenClient(final ObjectInputStream obin, final String host) {
+        logger.info("listenClient");
         new Thread(new Runnable() {
-            
+
             @Override
             public void run() {
                 while (true) {
@@ -165,8 +173,9 @@ public class GUI_Network extends javax.swing.JFrame {
             }
         }).start();
     }
-    
+
     public void switchPanel(Object ob) {
+        logger.info("switchPanel");
         switch (ob.toString()) {
             case "jp1":
                 drawSymbol(jp1, 0, 0);
@@ -197,11 +206,10 @@ public class GUI_Network extends javax.swing.JFrame {
                 break;
         }
     }
-    private char[][] board;
-    private char currentPlayerMark;
 
     // Set/Reset the board back to all empty values.
     public void initializeBoard() {
+        logger.info("initializeBoard");
 
         // Loop through rows
         for (int i = 0; i < 3; i++) {
@@ -215,8 +223,9 @@ public class GUI_Network extends javax.swing.JFrame {
 
     // Print the current board (may be replaced by GUI implementation later)
     public void printBoard() {
+        logger.info("initializeBoard");
         System.out.println("-------------");
-        
+
         for (int i = 0; i < 3; i++) {
             System.out.print("| ");
             for (int j = 0; j < 3; j++) {
@@ -230,8 +239,9 @@ public class GUI_Network extends javax.swing.JFrame {
     // Loop through all cells of the board and if one is found to be empty (contains char '-') then return false.
     // Otherwise the board is full.
     public boolean isBoardFull() {
+        logger.info("isBoardFull");
         boolean isFull = true;
-        
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == '-') {
@@ -239,7 +249,7 @@ public class GUI_Network extends javax.swing.JFrame {
                 }
             }
         }
-        
+
         return isFull;
     }
 
@@ -281,6 +291,7 @@ public class GUI_Network extends javax.swing.JFrame {
 
     // Change player marks back and forth.
     public void changePlayer() {
+        logger.info("changePlayer");
         if (currentPlayerMark == 'x') {
             currentPlayerMark = 'o';
         } else {
@@ -290,7 +301,7 @@ public class GUI_Network extends javax.swing.JFrame {
 
     // Places a mark at the cell specified by row and col with the mark of the current player.
     public boolean placeMark(int row, int col) {
-
+        logger.info("placeMark");
         // Make sure that row and column are in bounds of the board.
         if ((row >= 0) && (row < 3)) {
             if ((col >= 0) && (col < 3)) {
@@ -300,15 +311,16 @@ public class GUI_Network extends javax.swing.JFrame {
                 }
             }
         }
-        
+
         return false;
     }
-    
+
     public void setImage(final JPanel jp) {
+        logger.info("setImage");
         JLabel jl = null;
         if (currentPlayerMark == 'x') {
             final ImageIcon img = new ImageIcon(getClass().getResource("/img/x.png"));
-            
+
             jl = new JLabel() {
                 @Override
                 protected void paintComponent(Graphics g) {
@@ -316,10 +328,10 @@ public class GUI_Network extends javax.swing.JFrame {
                     g.drawImage(img.getImage(), 0, 0, jp.getWidth(), jp.getHeight(), null);
                 }
             };
-            
+
         } else if (currentPlayerMark == 'o') {
             final ImageIcon img = new ImageIcon(getClass().getResource("/img/o.png"));
-            
+
             jl = new JLabel() {
                 @Override
                 protected void paintComponent(Graphics g) {
@@ -327,14 +339,15 @@ public class GUI_Network extends javax.swing.JFrame {
                     g.drawImage(img.getImage(), 0, 0, jp.getWidth(), jp.getHeight(), null);
                 }
             };
-            
+
         }
         jl.setSize(jp.getWidth(), jp.getHeight());
         jp.add(jl);
         jp.repaint();
     }
-    
+
     public void checkWinner() {
+        logger.info("checkWinner");
         if (checkForWin()) {
             if (status == "Server") {
                 JOptionPane.showMessageDialog(null, "Server: You Won! Congrats!");
@@ -372,6 +385,7 @@ public class GUI_Network extends javax.swing.JFrame {
                         db.putData("INSERT INTO score(name, score) VALUES('" + player_name + "','1')");
                     }
                 } catch (Exception ex) {
+                    logger.error("checkWinner: Database error");
                     System.out.println(ex);
                 }
             }
@@ -384,8 +398,9 @@ public class GUI_Network extends javax.swing.JFrame {
         }
         changePlayer();
     }
-    
+
     public void drawSymbol(JPanel jp, int x, int y) {
+        logger.info("drawSymbol");
         setImage(jp);
         placeMark(x, y);
         checkWinner();

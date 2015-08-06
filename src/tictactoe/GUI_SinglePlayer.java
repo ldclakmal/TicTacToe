@@ -41,7 +41,9 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     Home home;
     char player_symbol;
     String player_name;
-
+    private char[][] board;
+    private char currentPlayerMark;
+    
     JDBC db = new JDBC();
     private Logger logger = Logger.getLogger(GUI_SinglePlayer.class);
 
@@ -100,8 +102,6 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
                 break;
         }
     }
-    private char[][] board;
-    private char currentPlayerMark;
 
     // Set/Reset the board back to all empty values.
     public void initializeBoard() {
@@ -260,6 +260,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
                         db.putData("INSERT INTO score(name, score) VALUES('" + player_name + "',)");
                     }
                 } catch (Exception ex) {
+                    logger.error("checkWinner: Database error");
                     System.out.println(ex);
                 }
             } else {
@@ -719,6 +720,8 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
         //return -1 to know that player X wins
         //return -2 to know that the game is draw
         //1
+
+        logger.info("makeMove method called for index " + index);
 
         gameXO[index] = "X";
         //2

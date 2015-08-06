@@ -19,7 +19,7 @@ public class JDBC {
 
     String driver = "com.mysql.jdbc.Driver";
     String url = "jdbc:mysql://localhost:3306/tictactoe";
-    
+
     private Logger logger = Logger.getLogger(JDBC.class);
     static Connection con;
 
