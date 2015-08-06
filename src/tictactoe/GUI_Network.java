@@ -338,7 +338,13 @@ public class GUI_Network extends javax.swing.JFrame {
     public void checkWinner() {
         if (checkForWin()) {
             if (status == "Server") {
-                JOptionPane.showMessageDialog(null, "You Won! Congrats!");
+                JOptionPane.showMessageDialog(null, "Server: You Won! Congrats!");
+                try {
+                    System.out.println("ava");
+                    hmout.get(tblClients.getValueAt(client, 0).toString()).writeObject("You Lost!");
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
                 try {
                     ResultSet rset = db.getData("SELECT * FROM score WHERE name='" + player_name + "'");
                     if (rset.next()) {
@@ -351,24 +357,19 @@ public class GUI_Network extends javax.swing.JFrame {
                 } catch (Exception ex) {
                     System.out.println(ex);
                 }
-                try {
-                    hmout.get(tblClients.getValueAt(client, 0).toString()).writeObject("You Lost!");
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                }
             } else if (status == "Client") {
                 try {
                     hmout.get(tblClients.getValueAt(client, 0).toString()).writeObject("You Lost!");
                 } catch (IOException ex) {
                     System.out.println(ex);
                 }
-                JOptionPane.showMessageDialog(null, "You Won! Congrats!");
+                JOptionPane.showMessageDialog(null, "Client: You Won! Congrats!");
                 try {
                     ResultSet rset = db.getData("SELECT * FROM score WHERE name='" + player_name + "'");
                     if (rset.next()) {
                         int score = rset.getInt("score");
                         score++;
-                        db.putData("UPDATE score SET score='" + score + "'");
+                        db.putData("UPDATE score SET score='" + score + "' WHERE name='" + player_name + "'");
                     } else {
                         db.putData("INSERT INTO score(name, score) VALUES('" + player_name + "','1')");
                     }
@@ -798,7 +799,7 @@ public class GUI_Network extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -247,7 +247,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
                     if (rset.next()) {
                         int score = rset.getInt("score");
                         score++;
-                        db.putData("UPDATE score SET score='" + score + "'");
+                        db.putData("UPDATE score SET score='" + score + "' WHERE name='" + player_name + "'");
                     } else {
                         db.putData("INSERT INTO score(name, score) VALUES('" + player_name + "',)");
                     }
