@@ -37,11 +37,15 @@ public class GUI_Network extends javax.swing.JFrame {
     String ServerIP;
     String status;
     int client;
+    Home home;
+    String player_name;
+
+    JDBC db = new JDBC();
 
     /**
      * Creates new form GUI
      */
-    public GUI_Network() {
+    public GUI_Network(Home h, String name) {
         initComponents();
         board = new char[3][3];
         currentPlayerMark = 'x';
@@ -57,8 +61,11 @@ public class GUI_Network extends javax.swing.JFrame {
             lblCurrentIP.setText(inet.getHostAddress());
             ss = new ServerSocket(port);
         } catch (Exception e) {
-//            System.out.println(e);
+            System.out.println(e);
         }
+
+        home = h;
+        player_name = name;
     }
 
     private void connectServer() {
@@ -149,7 +156,7 @@ public class GUI_Network extends javax.swing.JFrame {
                             switchPanel(ob);
                         }
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Server Down....");
+                        JOptionPane.showMessageDialog(null, "Oops! Server Down....");
                         break;
                     }
                 }
@@ -750,7 +757,7 @@ public class GUI_Network extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -946,7 +953,7 @@ public class GUI_Network extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI_Network().setVisible(true);
+//                new GUI_Network().setVisible(true);
             }
         });
     }

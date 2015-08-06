@@ -40,16 +40,17 @@ public class Home extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        chbSingle = new javax.swing.JCheckBox();
         btnPlay = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnX = new javax.swing.JButton();
-        btnO = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         btnScore = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnO = new javax.swing.JButton();
+        btnX = new javax.swing.JButton();
+        chbSingle = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tic Tac Toe v1.0");
@@ -58,9 +59,6 @@ public class Home extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/appbar.user.png"))); // NOI18N
 
         txtName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-
-        chbSingle.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        chbSingle.setText("Single Player");
 
         btnPlay.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnPlay.setText("Play");
@@ -76,28 +74,6 @@ public class Home extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("v1.0");
 
-        btnX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cross.gif"))); // NOI18N
-        btnX.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        btnX.setContentAreaFilled(false);
-        btnX.setFocusPainted(false);
-        btnX.setRolloverEnabled(false);
-        btnX.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXActionPerformed(evt);
-            }
-        });
-
-        btnO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/circle.png"))); // NOI18N
-        btnO.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        btnO.setContentAreaFilled(false);
-        btnO.setFocusPainted(false);
-        btnO.setRolloverEnabled(false);
-        btnO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOActionPerformed(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel4.setText("Copyright © 2015 iTeam. All rights reserved.");
 
@@ -110,14 +86,75 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Single Player"));
+
+        btnO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/circle.png"))); // NOI18N
+        btnO.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnO.setContentAreaFilled(false);
+        btnO.setEnabled(false);
+        btnO.setFocusPainted(false);
+        btnO.setRolloverEnabled(false);
+        btnO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOActionPerformed(evt);
+            }
+        });
+
+        btnX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cross.gif"))); // NOI18N
+        btnX.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnX.setContentAreaFilled(false);
+        btnX.setEnabled(false);
+        btnX.setFocusPainted(false);
+        btnX.setRolloverEnabled(false);
+        btnX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXActionPerformed(evt);
+            }
+        });
+
+        chbSingle.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        chbSingle.setText("Single Player");
+        chbSingle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbSingleActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(chbSingle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(btnX, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnO, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnO, btnX});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnO)
+                    .addComponent(btnX))
+                .addGap(0, 8, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(chbSingle)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnO, btnX});
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(192, 192, 192)
-                .addComponent(chbSingle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,66 +169,52 @@ public class Home extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addComponent(btnX, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(51, 51, 51)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(182, 182, 182)
-                                            .addComponent(btnO, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(32, 32, 32))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jLabel1)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addComponent(jSeparator1))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnScore, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnO, btnX});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnScore, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
-                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnX)
-                            .addComponent(btnO))
-                        .addGap(26, 26, 26)
-                        .addComponent(chbSingle)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnO, btnX});
-
-        setSize(new java.awt.Dimension(434, 465));
+        setSize(new java.awt.Dimension(434, 435));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -202,7 +225,7 @@ public class Home extends javax.swing.JFrame {
             if (chbSingle.isSelected()) {
                 new GUI_SinglePlayer(this, symbol, txtName.getText()).setVisible(true);
             } else {
-                new GUI_Network().setVisible(true);
+                new GUI_Network(this, txtName.getText()).setVisible(true);
             }
             this.setVisible(false);
         }
@@ -233,8 +256,17 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOActionPerformed
 
     private void btnScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScoreActionPerformed
-//        new Score(this, rootPaneCheckingEnabled).setVisible(true);
+        new Score(this, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_btnScoreActionPerformed
+
+    private void chbSingleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbSingleActionPerformed
+        btnX.setEnabled(true);
+        btnO.setEnabled(true);
+        if (!chbSingle.isSelected()) {
+            btnX.setEnabled(false);
+            btnO.setEnabled(false);
+        }
+    }//GEN-LAST:event_chbSingleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,6 +318,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField txtName;

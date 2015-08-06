@@ -13,8 +13,6 @@ import java.net.ServerSocket;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -51,17 +49,21 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     public GUI_SinglePlayer(Home h, char symbol, String name) {
         initComponents();
         board = new char[3][3];
+        home = h;
         currentPlayerMark = symbol;
         player_symbol = symbol;
         player_name = name;
-        initializeBoard();
-
-        for (int i = 0; i < 9; i++) {
-            gameXO[i] = " ";
+        lblName.setText(player_name);
+        lblSymbol.setText(null);
+        if (symbol == 'x') {
+            lblSymbol.setText(" X ");
+        } else {
+            lblSymbol.setText(" O ");
         }
 
+        initializeBoard();
+
         jp = new JPanel[]{jp1, jp2, jp3, jp4, jp5, jp6, jp7, jp8, jp9};
-        home = h;
     }
 
     public void switchPanel(Object ob) {
@@ -108,6 +110,10 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
             for (int j = 0; j < 3; j++) {
                 board[i][j] = '-';
             }
+        }
+
+        for (int i = 0; i < 9; i++) {
+            gameXO[i] = " ";
         }
     }
 
@@ -286,6 +292,12 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
         jp7 = new javax.swing.JPanel();
         jp8 = new javax.swing.JPanel();
         jp9 = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
+        lblSymbol = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Single Player");
@@ -504,29 +516,80 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
                     .addComponent(jp7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jp8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jp9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlGameLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jp1, jp2, jp3, jp4, jp5, jp6, jp7, jp8, jp9});
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Your Details"));
+
+        lblSymbol.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblSymbol.setForeground(new java.awt.Color(255, 0, 0));
+        lblSymbol.setText("Symbol");
+        lblSymbol.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+
+        lblName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblName.setText("Name");
+        lblName.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("Name :");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setText("Symbol :");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSymbol)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSymbol)
+                    .addComponent(lblName)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(pnlGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(384, 413));
+        setSize(new java.awt.Dimension(403, 509));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -614,6 +677,10 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jp1;
     private javax.swing.JPanel jp2;
     private javax.swing.JPanel jp3;
@@ -623,6 +690,8 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     private javax.swing.JPanel jp7;
     private javax.swing.JPanel jp8;
     private javax.swing.JPanel jp9;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblSymbol;
     private javax.swing.JPanel pnlGame;
     // End of variables declaration//GEN-END:variables
 
