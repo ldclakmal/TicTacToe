@@ -15,8 +15,6 @@ import java.net.Socket;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Chanaka Lakmal
  */
 public class GUI_Network extends javax.swing.JFrame {
-
+    
     InetAddress inet;
     ServerSocket ss;
     int port = 5556;
@@ -42,7 +40,7 @@ public class GUI_Network extends javax.swing.JFrame {
     int client;
     Home home;
     String player_name;
-
+    
     JDBC db = new JDBC();
 
     /**
@@ -56,7 +54,7 @@ public class GUI_Network extends javax.swing.JFrame {
         pnlGame.setVisible(false);
         pnlClientTable.setVisible(false);
         pnlServerIP.setVisible(false);
-
+        
         df = (DefaultTableModel) tblClients.getModel();
         hmout = new HashMap<String, ObjectOutputStream>();
         try {
@@ -66,14 +64,15 @@ public class GUI_Network extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
-
+        
         home = h;
         player_name = name;
+        lblName.setText(player_name);
     }
-
+    
     private void connectServer() {
         new Thread(new Runnable() {
-
+            
             @Override
             public void run() {
                 try {
@@ -94,14 +93,14 @@ public class GUI_Network extends javax.swing.JFrame {
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-
+                
             }
         }).start();
     }
-
+    
     private void listenServer(final ObjectInputStream obin, final int count, final String host) {
         new Thread(new Runnable() {
-
+            
             @Override
             public void run() {
                 while (true) {
@@ -121,10 +120,10 @@ public class GUI_Network extends javax.swing.JFrame {
             }
         }).start();
     }
-
+    
     private void connectClient() {
         new Thread(new Runnable() {
-
+            
             @Override
             public void run() {
                 try {
@@ -143,10 +142,10 @@ public class GUI_Network extends javax.swing.JFrame {
             }
         }).start();
     }
-
+    
     private void listenClient(final ObjectInputStream obin, final String host) {
         new Thread(new Runnable() {
-
+            
             @Override
             public void run() {
                 while (true) {
@@ -166,7 +165,7 @@ public class GUI_Network extends javax.swing.JFrame {
             }
         }).start();
     }
-
+    
     public void switchPanel(Object ob) {
         switch (ob.toString()) {
             case "jp1":
@@ -217,7 +216,7 @@ public class GUI_Network extends javax.swing.JFrame {
     // Print the current board (may be replaced by GUI implementation later)
     public void printBoard() {
         System.out.println("-------------");
-
+        
         for (int i = 0; i < 3; i++) {
             System.out.print("| ");
             for (int j = 0; j < 3; j++) {
@@ -232,7 +231,7 @@ public class GUI_Network extends javax.swing.JFrame {
     // Otherwise the board is full.
     public boolean isBoardFull() {
         boolean isFull = true;
-
+        
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == '-') {
@@ -240,7 +239,7 @@ public class GUI_Network extends javax.swing.JFrame {
                 }
             }
         }
-
+        
         return isFull;
     }
 
@@ -301,15 +300,15 @@ public class GUI_Network extends javax.swing.JFrame {
                 }
             }
         }
-
+        
         return false;
     }
-
+    
     public void setImage(final JPanel jp) {
         JLabel jl = null;
         if (currentPlayerMark == 'x') {
             final ImageIcon img = new ImageIcon(getClass().getResource("/img/x.png"));
-
+            
             jl = new JLabel() {
                 @Override
                 protected void paintComponent(Graphics g) {
@@ -317,10 +316,10 @@ public class GUI_Network extends javax.swing.JFrame {
                     g.drawImage(img.getImage(), 0, 0, jp.getWidth(), jp.getHeight(), null);
                 }
             };
-
+            
         } else if (currentPlayerMark == 'o') {
             final ImageIcon img = new ImageIcon(getClass().getResource("/img/o.png"));
-
+            
             jl = new JLabel() {
                 @Override
                 protected void paintComponent(Graphics g) {
@@ -328,19 +327,18 @@ public class GUI_Network extends javax.swing.JFrame {
                     g.drawImage(img.getImage(), 0, 0, jp.getWidth(), jp.getHeight(), null);
                 }
             };
-
+            
         }
         jl.setSize(jp.getWidth(), jp.getHeight());
         jp.add(jl);
         jp.repaint();
     }
-
+    
     public void checkWinner() {
         if (checkForWin()) {
             if (status == "Server") {
                 JOptionPane.showMessageDialog(null, "Server: You Won! Congrats!");
                 try {
-                    System.out.println("ava");
                     hmout.get(tblClients.getValueAt(client, 0).toString()).writeObject("You Lost!");
                 } catch (IOException ex) {
                     System.out.println(ex);
@@ -386,7 +384,7 @@ public class GUI_Network extends javax.swing.JFrame {
         }
         changePlayer();
     }
-
+    
     public void drawSymbol(JPanel jp, int x, int y) {
         setImage(jp);
         placeMark(x, y);
@@ -426,9 +424,12 @@ public class GUI_Network extends javax.swing.JFrame {
         lblServerIP = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Play over Network");
+        setBackground(new java.awt.Color(255, 255, 255));
 
         pnlGame.setBackground(new java.awt.Color(255, 255, 255));
         pnlGame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 2, true));
@@ -747,6 +748,12 @@ public class GUI_Network extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("Name :");
+
+        lblName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lblName.setText("Name");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -754,20 +761,25 @@ public class GUI_Network extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlClientTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlServerIP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblIP)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblCurrentIP))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblIP)
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblCurrentIP)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(pnlClientTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlServerIP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1))
+                                .addComponent(lblName)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -777,17 +789,21 @@ public class GUI_Network extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblIP)
                     .addComponent(lblCurrentIP))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jLabel1)
+                    .addComponent(lblName))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlClientTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(pnlServerIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -799,7 +815,7 @@ public class GUI_Network extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1005,6 +1021,7 @@ public class GUI_Network extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
@@ -1019,6 +1036,7 @@ public class GUI_Network extends javax.swing.JFrame {
     private javax.swing.JPanel jp9;
     private javax.swing.JLabel lblCurrentIP;
     private javax.swing.JLabel lblIP;
+    private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblServerIP;
     private javax.swing.JPanel pnlClientTable;
     private javax.swing.JPanel pnlGame;
