@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,12 +22,14 @@ public class Home extends javax.swing.JFrame {
 
     char symbol;
     Image img;
+    private Logger logger = Logger.getLogger(Home.class);
 
     /**
      * Creates new form Home
      */
     public Home() {
         initComponents();
+        logger.info("Home.java");
     }
 
     /**
@@ -219,12 +222,15 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
+        logger.info("Play button action performed");
         if (txtName.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please enter your name.", "Message", JOptionPane.WARNING_MESSAGE);
         } else {
             if (chbSingle.isSelected()) {
+                logger.info("Single player window will be opened");
                 new GUI_SinglePlayer(this, symbol, txtName.getText()).setVisible(true);
             } else {
+                logger.info("Network player window will be opened");
                 new GUI_Network(this, txtName.getText()).setVisible(true);
             }
             this.setVisible(false);
@@ -232,6 +238,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPlayActionPerformed
 
     private void btnXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXActionPerformed
+        logger.info("X button action performed");
         symbol = 'x';
         try {
             img = ImageIO.read(getClass().getResource("../img/crossR.png"));
@@ -239,11 +246,12 @@ public class Home extends javax.swing.JFrame {
             img = ImageIO.read(getClass().getResource("../img/circle.png"));
             btnO.setIcon(new ImageIcon(img));
         } catch (IOException ex) {
-            System.out.println(ex);
+            logger.error("Image not available at btnXActionPerformed");
         }
     }//GEN-LAST:event_btnXActionPerformed
 
     private void btnOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOActionPerformed
+        logger.info("O button action performed");
         symbol = 'o';
         try {
             img = ImageIO.read(getClass().getResource("../img/circleR.png"));
@@ -251,15 +259,17 @@ public class Home extends javax.swing.JFrame {
             img = ImageIO.read(getClass().getResource("../img/cross.gif"));
             btnX.setIcon(new ImageIcon(img));
         } catch (IOException ex) {
-            System.out.println(ex);
+            logger.error("Image not available at btnOActionPerformed");
         }
     }//GEN-LAST:event_btnOActionPerformed
 
     private void btnScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScoreActionPerformed
+        logger.info("Score button action performed");
         new Score(this, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_btnScoreActionPerformed
 
     private void chbSingleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbSingleActionPerformed
+        logger.info("Check Box action performed");
         btnX.setEnabled(true);
         btnO.setEnabled(true);
         if (!chbSingle.isSelected()) {

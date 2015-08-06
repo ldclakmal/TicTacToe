@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -42,6 +43,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     String player_name;
 
     JDBC db = new JDBC();
+    private Logger logger = Logger.getLogger(GUI_SinglePlayer.class);
 
     /**
      * Creates new form GUI
@@ -67,6 +69,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     }
 
     public void switchPanel(Object ob) {
+        logger.info("switchPanel");
         switch (ob.toString()) {
             case "jp1":
                 drawSymbol(jp1, 0, 0);
@@ -102,7 +105,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
 
     // Set/Reset the board back to all empty values.
     public void initializeBoard() {
-
+        logger.info("initializeBoard");
         // Loop through rows
         for (int i = 0; i < 3; i++) {
 
@@ -119,6 +122,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
 
     // Print the current board (may be replaced by GUI implementation later)
     public void printBoard() {
+        logger.info("printBoard");
         System.out.println("-------------");
 
         for (int i = 0; i < 3; i++) {
@@ -134,6 +138,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     // Loop through all cells of the board and if one is found to be empty (contains char '-') then return false.
     // Otherwise the board is full.
     public boolean isBoardFull() {
+        logger.info("isBoardFull");
         boolean isFull = true;
 
         for (int i = 0; i < 3; i++) {
@@ -185,6 +190,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
 
     // Change player marks back and forth.
     public void changePlayer() {
+        logger.info("changePlayer");
         if (currentPlayerMark == 'x') {
             currentPlayerMark = 'o';
         } else {
@@ -194,7 +200,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
 
     // Places a mark at the cell specified by row and col with the mark of the current player.
     public boolean placeMark(int row, int col) {
-
+        logger.info("placeMark");
         // Make sure that row and column are in bounds of the board.
         if ((row >= 0) && (row < 3)) {
             if ((col >= 0) && (col < 3)) {
@@ -209,6 +215,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     }
 
     public void setImage(final JPanel jp) {
+        logger.info("setImage");
         JLabel jl = null;
         if (currentPlayerMark == 'x') {
             final ImageIcon img = new ImageIcon(getClass().getResource("/img/x.png"));
@@ -239,6 +246,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     }
 
     public void checkWinner() {
+        logger.info("checkWinner");
         if (checkForWin()) {
             if (currentPlayerMark == player_symbol) {
                 JOptionPane.showMessageDialog(null, "You Won! Congrats!");
@@ -268,6 +276,7 @@ public class GUI_SinglePlayer extends javax.swing.JFrame {
     }
 
     public void drawSymbol(JPanel jp, int x, int y) {
+        logger.info("drawSymbol");
         setImage(jp);
         placeMark(x, y);
         checkWinner();
